@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import in.stud.R;
+import in.stud.main.content.PeopleContent;
 
 
 /**
@@ -140,8 +141,6 @@ public class PeopleFragment extends Fragment
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"Near me", "My school/college"};
-        private final String[] peopleTypes = TITLES;
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -149,12 +148,12 @@ public class PeopleFragment extends Fragment
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return TITLES[position];
+            return PeopleContent.PEOPLE_SEARCH_TYPE[position];
         }
 
         @Override
         public int getCount() {
-            return TITLES.length;
+            return PeopleContent.PEOPLE_SEARCH_TYPE.length;
         }
 
         @Override

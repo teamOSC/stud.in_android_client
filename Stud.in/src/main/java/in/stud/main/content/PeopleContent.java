@@ -13,6 +13,16 @@ import java.util.Map;
  */
 public class PeopleContent {
 
+    public static final String PEOPLE_SEARCH_TYPE[] =
+            {
+              "NEAR ME",
+              "MY COLLEGE/SCHOOL",
+              "IN MY CIRCLES"
+            };
+
+
+
+
     /**
      * An array of sample (dummy) items.
      */

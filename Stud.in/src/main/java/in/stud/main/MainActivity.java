@@ -11,16 +11,16 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 import in.stud.R;
+import in.stud.main.fragments.MyProfileFragment;
 import in.stud.main.fragments.NotesFragment;
 import in.stud.main.fragments.PeopleFragment;
 import in.stud.main.fragments.PeopleListFragment;
-import in.stud.main.fragments.ProfileFragment;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         PeopleListFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener,
+        MyProfileFragment.OnFragmentInteractionListener,
         PeopleFragment.OnFragmentInteractionListener,
         NotesFragment.OnFragmentInteractionListener {
 
