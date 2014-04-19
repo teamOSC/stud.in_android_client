@@ -1,4 +1,4 @@
-package in.stud.main.fragments.dummy;
+package in.stud.main.content;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class PeopleContent {
 
     /**
      * An array of sample (dummy) items.
