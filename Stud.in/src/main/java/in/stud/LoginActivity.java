@@ -24,6 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -61,7 +63,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private EditText mPasswordView;
     private View mProgressView;
     private View mEmailLoginFormView;
-    private SignInButton mPlusSignInButton;
+    private ImageButton mPlusSignInButton, mFbSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
 
@@ -73,7 +75,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         setContentView(R.layout.activity_login);
 
         // Find the Google+ sign in button.
-        mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
+        mPlusSignInButton = (ImageButton) findViewById(R.id.plus_sign_in_button);
+        mFbSignInButton = (ImageButton) findViewById(R.id.facebook_sign_in_button);
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.
             mPlusSignInButton.setOnClickListener(new OnClickListener() {
@@ -256,6 +259,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
         mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
+        mFbSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
+
         //mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
     }
 

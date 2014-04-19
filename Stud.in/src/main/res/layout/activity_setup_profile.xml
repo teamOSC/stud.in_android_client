@@ -6,6 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="20dp"
+    android:background="@android:color/holo_orange_light"
     tools:context="in.stud.main.SetupProfileActivity">
 
     <RelativeLayout
@@ -32,17 +33,23 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:paddingRight="50dp"
+            android:paddingLeft="50dp"
             android:layout_below="@id/headerPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/person_name"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="name" />
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/tagline"
                 android:layout_below="@id/person_name"
                 android:layout_marginTop="5dp"
@@ -51,6 +58,8 @@
                 android:hint="tagline"/>
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/dob"
                 android:layout_below="@id/tagline"
                 android:layout_marginTop="5dp"
@@ -59,6 +68,8 @@
                 android:hint="date of birth" />
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/institution_type"
                 android:layout_below="@id/dob"
                 android:layout_marginTop="5dp"
@@ -67,6 +78,8 @@
                 android:hint="school/college" />
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/institution_name"
                 android:layout_below="@id/institution_type"
                 android:layout_marginTop="5dp"
@@ -75,6 +88,7 @@
                 android:hint="institution name" />
 
             <Button
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/select_residence"
                 android:layout_below="@id/institution_name"
                 android:layout_width="match_parent"
@@ -83,6 +97,8 @@
                 android:text="select residence"/>
 
             <EditText
+                android:textColorHint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/subjects"
                 android:layout_marginTop="5dp"
                 android:layout_below="@id/select_residence"
@@ -91,6 +107,7 @@
                 android:hint="Enter subjects separated with commas" />
 
             <Button
+                android:textColor="@android:color/holo_blue_dark"
                 android:id="@+id/button_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
