@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,11 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import in.stud.R;
 import in.stud.main.fragments.NotesFragment;
 import in.stud.main.fragments.PeopleFragment;
+import in.stud.main.fragments.ProfileFragment;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         PeopleFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
         NotesFragment.OnFragmentInteractionListener {
 
     /**
@@ -120,4 +123,6 @@ public class MainActivity extends Activity
     public void onFragmentInteraction(String id) {
 
     }
+
+
 }
