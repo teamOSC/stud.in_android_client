@@ -1,13 +1,50 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="in.stud.main.fragments.MyProfileFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ImageView
+        android:id="@+id/my_profile_cover_photo"
+        android:background="@android:color/holo_blue_bright"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dp"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ellipsize="marquee"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="20"
+        android:text="Firstname Lastname"
+        android:id="@+id/my_profile_full_name"
+        android:layout_alignBottom="@+id/my_profile_cover_photo"
+        android:layout_toRightOf="@+id/my_profile_profile_photo"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@android:color/holo_purple"
+        android:id="@+id/my_profile_details_container"
+        android:layout_width="match_parent"
+        android:layout_below="@id/my_profile_cover_photo"
+        android:layout_height="fill_parent"/>
+
+    <ImageView
+        android:background="@android:color/holo_orange_light"
+        android:layout_marginTop="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/my_profile_profile_photo"
+        android:layout_weight="2" />
+
+
+</RelativeLayout>
+
+

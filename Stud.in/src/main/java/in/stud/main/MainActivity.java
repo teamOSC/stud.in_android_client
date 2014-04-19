@@ -54,6 +54,12 @@ public class MainActivity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         switch (position) {
+            case 0:
+            default:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, MyProfileFragment.newInstance("A", "a"))
+                        .commit();
+                break;
             case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PeopleFragment.newInstance("A", "a"))
@@ -64,11 +70,7 @@ public class MainActivity extends Activity
                         .replace(R.id.container, NotesFragment.newInstance("A", "a"))
                         .commit();
                 break;
-            default:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, PeopleListFragment.newInstance("A", "a"))
-                        .commit();
-                break;
+
         }
 
     }
