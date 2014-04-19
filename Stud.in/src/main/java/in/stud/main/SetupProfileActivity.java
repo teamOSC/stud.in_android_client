@@ -1,13 +1,20 @@
 package in.stud.main;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,17 +25,23 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
@@ -54,6 +67,9 @@ public class SetupProfileActivity extends Activity implements
 
     private ProgressBar profileProgressBar;
     private ImageView profilePhoto;
+
+    LocationClient mLocationClient;
+    static Location mCurrentLocation = null;
 
     /*
      * FORM FIELDS
@@ -91,6 +107,21 @@ public class SetupProfileActivity extends Activity implements
         selectResidence = (Button) findViewById(R.id.select_residence);
         selectResidence.setOnClickListener(this);
         subjectsEdit = (EditText) findViewById(R.id.subjects);
+
+        mLocationClient = new LocationClient(getApplicationContext(),
+                new GooglePlayServicesClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle bundle) {
+                        mCurrentLocation = mLocationClient.getLastLocation();
+                        Log.d(TAG, "Connected !!!");
+                    }
+
+                    @Override
+                    public void onDisconnected() {
+
+                    }
+                }, this);
+        mLocationClient.connect();
     }
 
     @Override
@@ -135,6 +166,7 @@ public class SetupProfileActivity extends Activity implements
                 new DownloadProfilePhotoTask().execute(new String[] {personPhoto.getUrl()});
             }
         }
+
     }
 
     @Override
@@ -192,6 +224,9 @@ public class SetupProfileActivity extends Activity implements
                 registerUserToBackend();
                 break;
             case R.id.select_residence:
+                MapDialog mapDialog = new MapDialog();
+                FragmentManager fm = getFragmentManager();
+                mapDialog.show(fm, "MAP_DIALOG");
                 break;
         }
     }
@@ -205,7 +240,8 @@ public class SetupProfileActivity extends Activity implements
         String subjects = subjectsEdit.getText().toString();
         String email = "";
 
-        if ( name.equals("") || tagLine.equals("") || dob.equals("") || institutionType.equals("") || institutionName.equals("") || subjects.equals("")) {
+        if ( name.equals("") || tagLine.equals("") || dob.equals("") || institutionType.equals("") || institutionName.equals("") || subjects.equals("")
+                || MapDialog.homePosition == null) {
             if (name.equals(""))
                 personName.setError("Please enter the value");
             else
@@ -230,6 +266,8 @@ public class SetupProfileActivity extends Activity implements
                 subjectsEdit.setError("Please enter the value");
             else
                 subjectsEdit.setError(null);
+            if (MapDialog.homePosition == null)
+                Toast.makeText(getApplicationContext(), "please select address", Toast.LENGTH_SHORT).show();
         } else {
             try {
                 name =  URLEncoder.encode(name, "UTF-8");
@@ -245,7 +283,7 @@ public class SetupProfileActivity extends Activity implements
 
             final String url = "http://tosc.in:5002/add?name="+name+"&tag_line="+tagLine+"&email="+email+
                     "&dob="+ dob + "&ins_type=" + institutionType + "&ins_name=" + institutionName
-                    + "&address=" + "77.32,23.03" + "&subjects=" + subjects;
+                    + "&address=" + MapDialog.homePosition.latitude + "," + MapDialog.homePosition.longitude + "&subjects=" + subjects;
             Log.d(TAG, "GET URL = " + url);
 
             new AsyncTask<Void, Void, Void>() {
@@ -273,6 +311,52 @@ public class SetupProfileActivity extends Activity implements
                 }
             }.execute();
         }
+    }
+
+    private static class MapDialog extends DialogFragment {
+
+        public static LatLng homePosition = null;
+
+        public MapDialog() {
+            // Empty constructor required for DialogFragment
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            View rootView = inflater.inflate(R.layout.layout_maps_dialog, null);
+            builder.setView(rootView)
+                    // Add action buttons
+                    .setPositiveButton("Select Address", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    });
+            final GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            if (mCurrentLocation != null) {
+                LatLng tempLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(tempLatLng, 13.0f));
+            }
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    markerOptions.title("My Location");
+                    homePosition = latLng;
+                    mMap.addMarker(markerOptions);
+                }
+            });
+            return builder.create();
+        }
+
     }
 
 }
