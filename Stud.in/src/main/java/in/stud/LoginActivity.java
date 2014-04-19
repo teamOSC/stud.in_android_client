@@ -8,6 +8,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +35,7 @@ import com.google.android.gms.common.SignInButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.stud.main.MainActivity;
 import in.stud.main.SetupProfileActivity;
 
 
@@ -57,6 +60,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+
+    private static final String TAG = "LoginActivity";
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -242,8 +247,15 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 revokeAccess();
             }
         }); */
+        SharedPreferences settings = getSharedPreferences("PREFS_MAIN", MODE_PRIVATE);
+        boolean isRegistered = settings.getBoolean("is_registered", false);
+        Intent mIntent;
         this.finish();
-        Intent mIntent = new Intent(LoginActivity.this, SetupProfileActivity.class);
+        if (isRegistered) {
+            mIntent = new Intent(LoginActivity.this, MainActivity.class);
+        } else {
+            mIntent = new Intent(LoginActivity.this, SetupProfileActivity.class);
+        }
         this.startActivity(mIntent);
     }
 

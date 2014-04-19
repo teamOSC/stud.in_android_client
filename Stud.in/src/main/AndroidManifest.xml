@@ -33,6 +33,8 @@
         </activity>
         <activity
             android:name="in.stud.main.SetupProfileActivity"
+            android:noHistory="true"
+            android:excludeFromRecents="true"
             android:label="@string/title_activity_setup_profile" >
         </activity>
         <meta-data

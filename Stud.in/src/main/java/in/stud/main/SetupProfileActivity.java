@@ -305,6 +305,11 @@ public class SetupProfileActivity extends Activity implements
 
                 @Override
                 protected void onPostExecute (Void v) {
+                    SharedPreferences settings = getSharedPreferences("PREFS_MAIN", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("is_registered", true);
+                    editor.commit();
+                    finish();
                     Toast.makeText(getApplicationContext(), "you have been registered", Toast.LENGTH_SHORT).show();
                     Intent mainIntent = new Intent(SetupProfileActivity.this, MainActivity.class);
                     startActivity(mainIntent);
