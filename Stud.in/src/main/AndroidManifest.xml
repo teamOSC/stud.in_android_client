@@ -23,8 +23,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="in.stud.MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
     <!-- To access Google+ APIs: -->

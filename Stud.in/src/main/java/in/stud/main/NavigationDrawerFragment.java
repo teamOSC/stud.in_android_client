@@ -1,4 +1,4 @@
-package in.stud;
+package in.stud.main;
 
 
 import android.app.Activity;
@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import in.stud.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
