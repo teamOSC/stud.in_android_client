@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -29,6 +30,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import java.util.ArrayList;
 import java.util.List;
+
+import in.stud.main.SetupProfileActivity;
 
 
 /**
@@ -236,6 +239,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 revokeAccess();
             }
         }); */
+        this.finish();
+        Intent mIntent = new Intent(LoginActivity.this, SetupProfileActivity.class);
+        this.startActivity(mIntent);
     }
 
     @Override
