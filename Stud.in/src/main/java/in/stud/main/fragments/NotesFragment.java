@@ -76,7 +76,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<NotesContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, NotesContent.ITEMS);
+                R.layout.list_item_notes, R.id.notes_list_item_header, NotesContent.ITEMS);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView = (AbsListView) view.findViewById(R.id.notes_list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks

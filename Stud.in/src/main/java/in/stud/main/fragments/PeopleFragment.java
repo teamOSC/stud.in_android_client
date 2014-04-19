@@ -75,7 +75,7 @@ public class PeopleFragment extends Fragment implements AbsListView.OnItemClickL
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<PeopleContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, PeopleContent.ITEMS);
+                R.layout.list_item_people, R.id.people_list_item_header, PeopleContent.ITEMS);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class PeopleFragment extends Fragment implements AbsListView.OnItemClickL
         View view = inflater.inflate(R.layout.fragment_people, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView = (AbsListView) view.findViewById(R.id.people_list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
