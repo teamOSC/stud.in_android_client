@@ -13,7 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import in.stud.R;
 
-import in.stud.main.content.PeopleContent;
+import in.stud.main.content.NotesContent;
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +24,7 @@ import in.stud.main.content.PeopleContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class peopleFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class NotesFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +49,8 @@ public class peopleFragment extends Fragment implements AbsListView.OnItemClickL
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static peopleFragment newInstance(String param1, String param2) {
-        peopleFragment fragment = new peopleFragment();
+    public static NotesFragment newInstance(String param1, String param2) {
+        NotesFragment fragment = new NotesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,7 +62,7 @@ public class peopleFragment extends Fragment implements AbsListView.OnItemClickL
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public peopleFragment() {
+    public NotesFragment() {
     }
 
     @Override
@@ -75,14 +75,14 @@ public class peopleFragment extends Fragment implements AbsListView.OnItemClickL
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<PeopleContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, PeopleContent.ITEMS);
+        mAdapter = new ArrayAdapter<NotesContent.DummyItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, NotesContent.ITEMS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_people, container, false);
+        View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
@@ -117,7 +117,7 @@ public class peopleFragment extends Fragment implements AbsListView.OnItemClickL
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(PeopleContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(NotesContent.ITEMS.get(position).id);
         }
     }
 

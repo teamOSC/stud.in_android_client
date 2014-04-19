@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class PeopleContent {
+public class NotesContent {
 
     /**
      * An array of sample (dummy) items.
@@ -25,9 +25,9 @@ public class PeopleContent {
 
     static {
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Guy 1"));
-        addItem(new DummyItem("2", "Guy 2"));
-        addItem(new DummyItem("3", "Guy 3"));
+        addItem(new DummyItem("1", "Note 1"));
+        addItem(new DummyItem("2", "Note 2"));
+        addItem(new DummyItem("3", "Note 3"));
     }
 
     private static void addItem(DummyItem item) {

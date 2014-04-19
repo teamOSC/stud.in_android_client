@@ -3,23 +3,21 @@ package in.stud.main;
 import android.app.Activity;
 
 import android.app.ActionBar;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.TextView;
 
 import in.stud.R;
-import in.stud.main.fragments.peopleFragment;
+import in.stud.main.fragments.NotesFragment;
+import in.stud.main.fragments.PeopleFragment;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, peopleFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        PeopleFragment.OnFragmentInteractionListener,
+        NotesFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -50,9 +48,24 @@ public class MainActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, peopleFragment.newInstance("A", "a"))
-                .commit();
+        switch (position) {
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PeopleFragment.newInstance("A", "a"))
+                        .commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, NotesFragment.newInstance("A", "a"))
+                        .commit();
+                break;
+            default:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PeopleFragment.newInstance("A", "a"))
+                        .commit();
+                break;
+        }
+
     }
 
     public void onSectionAttached(int number) {
