@@ -208,16 +208,28 @@ public class SetupProfileActivity extends Activity implements
         if ( name.equals("") || tagLine.equals("") || dob.equals("") || institutionType.equals("") || institutionName.equals("") || subjects.equals("")) {
             if (name.equals(""))
                 personName.setError("Please enter the value");
+            else
+                personName.setError(null);
             if (tagLine.equals(""))
                 tagLineEdit.setError("Please enter the value");
+            else
+                tagLineEdit.setError(null);
             if (dob.equals(""))
                 dobEdit.setError("Please enter the value");
+            else
+                dobEdit.setError(null);
             if (institutionType.equals(""))
                 institutionTypeEdit.setError("Please enter the value");
+            else
+                institutionTypeEdit.setError(null);
             if (institutionName.equals(""))
                 institutionNameEdit.setError("Please enter the value");
+            else
+                institutionNameEdit.setError(null);
             if (subjects.equals(""))
                 subjectsEdit.setError("Please enter the value");
+            else
+                subjectsEdit.setError(null);
         } else {
             try {
                 name =  URLEncoder.encode(name, "UTF-8");
