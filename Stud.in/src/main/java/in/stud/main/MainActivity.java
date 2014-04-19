@@ -13,13 +13,15 @@ import android.support.v4.widget.DrawerLayout;
 import in.stud.R;
 import in.stud.main.fragments.NotesFragment;
 import in.stud.main.fragments.PeopleFragment;
+import in.stud.main.fragments.PeopleListFragment;
 import in.stud.main.fragments.ProfileFragment;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        PeopleFragment.OnFragmentInteractionListener,
+        PeopleListFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
+        PeopleFragment.OnFragmentInteractionListener,
         NotesFragment.OnFragmentInteractionListener {
 
     /**
@@ -64,7 +66,7 @@ public class MainActivity extends Activity
                 break;
             default:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PeopleFragment.newInstance("A", "a"))
+                        .replace(R.id.container, PeopleListFragment.newInstance("A", "a"))
                         .commit();
                 break;
         }
@@ -125,4 +127,8 @@ public class MainActivity extends Activity
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
