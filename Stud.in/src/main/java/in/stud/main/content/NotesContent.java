@@ -16,40 +16,51 @@ public class NotesContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public List<DummyItem> mItems = new ArrayList<DummyItem>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
-
-    static {
+    public NotesContent() {
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Note 1"));
-        addItem(new DummyItem("2", "Note 2"));
-        addItem(new DummyItem("3", "Note 3"));
+        addItem(new DummyItem("http://some.url/image",
+                "MyAwesomeNotes", "Arnav Gupta",
+                "g1hjv4i1h2", new String[]{"lol", "notes"}));
+        addItem(new DummyItem("http://some.url/image2",
+                "MyBetterNotes", "Umair",
+                "aag23fa", new String[]{"wtf", "amidoing"}));
+        addItem(new DummyItem("http://some.url/image3",
+                "MyGoodNotes", "Saurav",
+                "as134sg", new String[]{"olala", "boing"}));
     }
 
-    private static void addItem(DummyItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+    private void addItem(DummyItem item) {
+        mItems.add(item);
     }
 
     /**
      * A dummy item representing a piece of content.
      */
     public static class DummyItem {
-        public String id;
-        public String content;
+        public String url;
+        public String noteTitle;
+        public String uploader;
+        public String gcmId;
+        public String[] tags;
 
-        public DummyItem(String id, String content) {
-            this.id = id;
-            this.content = content;
+        public DummyItem(String url, String title, String uploader, String gcmId, String[] tags) {
+            this.url = url;
+            this.noteTitle = title;
+            this.uploader = uploader;
+            this.gcmId = gcmId;
+            this.tags = tags;
+
         }
 
         @Override
         public String toString() {
-            return content;
+            return noteTitle;
         }
+    }
+
+    public int getCount () {
+        return mItems.size();
     }
 }

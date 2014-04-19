@@ -1,6 +1,7 @@
 package in.stud.main.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import in.stud.R;
 
@@ -21,7 +24,7 @@ import in.stud.main.content.NotesContent;
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
  * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
+ * Activities containing this fragment MUST implement the  Callbacks
  * interface.
  */
 public class NotesFragment extends Fragment implements AbsListView.OnItemClickListener {
@@ -46,7 +49,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private BaseAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static NotesFragment newInstance(String param1, String param2) {
@@ -74,9 +77,10 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<NotesContent.DummyItem>(getActivity(),
-                R.layout.list_item_notes, R.id.notes_list_item_header, NotesContent.ITEMS);
+        NotesContent mContent = new NotesContent();
+        mAdapter = new NotesAdapter(mContent);
+
+
     }
 
     @Override
@@ -85,8 +89,8 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.notes_list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView = (ListView) view.findViewById(R.id.notes_list);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -114,11 +118,6 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(NotesContent.ITEMS.get(position).id);
-        }
     }
 
     /**
@@ -147,6 +146,52 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+    }
+
+    public class NotesAdapter extends BaseAdapter {
+
+        private NotesContent content;
+
+        NotesAdapter( NotesContent nc) {
+            content = nc;
+        }
+
+        @Override
+        public int getCount() {
+            return content.getCount();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return content.mItems.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View rowView;
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(R.layout.list_item_notes, null);
+            } else {
+                rowView = convertView;
+            }
+
+            TextView title = (TextView) rowView.findViewById(R.id.notes_list_item_title);
+            TextView uploader = (TextView) rowView.findViewById(R.id.notes_list_item_uploader);
+            TextView tags = (TextView) rowView.findViewById(R.id.notes_list_item_tags);
+
+            title.setText(content.mItems.get(position).noteTitle);
+            uploader.setText(content.mItems.get(position).uploader);
+            tags.setText(content.mItems.get(position).tags.toString());
+            return null;
+        }
     }
 
 }
