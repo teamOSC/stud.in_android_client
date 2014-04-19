@@ -1,17 +1,21 @@
 package in.stud.main;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -20,18 +24,28 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import in.stud.R;
 
 public class SetupProfileActivity extends Activity implements
+        Button.OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
@@ -40,6 +54,18 @@ public class SetupProfileActivity extends Activity implements
 
     private ProgressBar profileProgressBar;
     private ImageView profilePhoto;
+
+    /*
+     * FORM FIELDS
+     */
+    private Button registerButton;
+    private EditText personName;
+    private EditText tagLineEdit;
+    private EditText dobEdit;
+    private EditText institutionTypeEdit;
+    private EditText institutionNameEdit;
+    private Button selectResidence;
+    private EditText subjectsEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +81,16 @@ public class SetupProfileActivity extends Activity implements
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
+        registerButton = (Button) findViewById(R.id.button_register);
+        registerButton.setOnClickListener(this);
+        personName = (EditText) findViewById(R.id.person_name);
+        tagLineEdit = (EditText) findViewById(R.id.tagline);
+        dobEdit = (EditText) findViewById(R.id.dob);
+        institutionTypeEdit = (EditText) findViewById(R.id.institution_type);
+        institutionNameEdit = (EditText) findViewById(R.id.institution_name);
+        selectResidence = (Button) findViewById(R.id.select_residence);
+        selectResidence.setOnClickListener(this);
+        subjectsEdit = (EditText) findViewById(R.id.subjects);
     }
 
     @Override
@@ -146,6 +182,84 @@ public class SetupProfileActivity extends Activity implements
             profileProgressBar.setVisibility(View.GONE);
             profilePhoto.setImageBitmap(mBitmap);
             profilePhoto.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick (View v) {
+        switch (v.getId()) {
+            case R.id.button_register :
+                registerUserToBackend();
+                break;
+            case R.id.select_residence:
+                break;
+        }
+    }
+
+    private void registerUserToBackend() {
+        String name = personName.getText().toString();
+        String tagLine = tagLineEdit.getText().toString();
+        String dob = dobEdit.getText().toString();
+        String institutionType = institutionTypeEdit.getText().toString();
+        String institutionName = institutionNameEdit.getText().toString();
+        String subjects = subjectsEdit.getText().toString();
+        String email = "";
+
+        if ( name.equals("") || tagLine.equals("") || dob.equals("") || institutionType.equals("") || institutionName.equals("") || subjects.equals("")) {
+            if (name.equals(""))
+                personName.setError("Please enter the value");
+            if (tagLine.equals(""))
+                tagLineEdit.setError("Please enter the value");
+            if (dob.equals(""))
+                dobEdit.setError("Please enter the value");
+            if (institutionType.equals(""))
+                institutionTypeEdit.setError("Please enter the value");
+            if (institutionName.equals(""))
+                institutionNameEdit.setError("Please enter the value");
+            if (subjects.equals(""))
+                subjectsEdit.setError("Please enter the value");
+        } else {
+            try {
+                name =  URLEncoder.encode(name, "UTF-8");
+                tagLine = URLEncoder.encode(tagLine, "UTF-8");
+                dob = URLEncoder.encode(dob, "UTF-8");
+                institutionType = URLEncoder.encode(institutionType, "UTF-8");
+                institutionName = URLEncoder.encode(institutionName, "UTF-8");
+                subjects = URLEncoder.encode(subjects, "UTF-8");
+                email = URLEncoder.encode(Utils.getEmail(getApplicationContext()), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            final String url = "http://tosc.in:5002/add?name="+name+"&tag_line="+tagLine+"&email="+email+
+                    "&dob="+ dob + "&ins_type=" + institutionType + "&ins_name=" + institutionName
+                    + "&address=" + "77.32,23.03" + "&subjects=" + subjects;
+            Log.d(TAG, "GET URL = " + url);
+
+            new AsyncTask<Void, Void, Void>() {
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpGet httpget = new HttpGet(url);
+                    try {
+                        httpClient.execute(httpget);
+                    } catch (ClientProtocolException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute (Void v) {
+                    Toast.makeText(getApplicationContext(), "you have been registered", Toast.LENGTH_SHORT).show();
+                    Intent mainIntent = new Intent(SetupProfileActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                }
+            }.execute();
         }
     }
 
