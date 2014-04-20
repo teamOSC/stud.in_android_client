@@ -1,57 +1,137 @@
 [
-  {
-    "name": "abhinav sinha",
-    "dob": "3/4/1995",
-    "tag_line": "love studying physics",
-    "tag_name": "physics, mathematics",
-    "subjects": "electrical, english",
-    "address": "28.444585, 77.042827",
-    "ins_type": "college",
-    "email": "abhinav.b.sinha@gmail.com",
-    "gcm_id": "sheikeb@b"
-  },
-  {
-    "name": "arnav gupta",
-    "dob": "31/3/1994",
-    "tag_line": "lovecodingandalgorithms",
-    "tag_name": "chemistry, economics",
-    "subjects": "everything",
-    "address": "28.444292, 77.040649",
-    "ins_type": "school",
-    "email": "championswimmer@gmail.com",
-    "gcm_id": "championswimmer"
-  },
-  {
-    "name": "umairkhan",
-    "dob": "15/8/1994",
-    "tag_line": "lovephpcoding",
-    "tag_name": "machines, powersystems",
-    "subjects": "everythingandmore",
-    "address": "28.443273, 77.038954",
-    "ins_type": "college",
-    "email": "omerjerk@gmail.com",
-    "gcm_id": "omerjerk"
-  },
-  {
-    "name": "sauravtomar",
-    "dob": "17/4/1994",
-    "tag_line": "lovepythoncoding",
-    "tag_name": "lic,     edc",
-    "subjects": "everythingwithmuchmore",
-    "address": "28.439075,     77.040228",
-    "ins_type": "school",
-    "email": "stomatrix@gmail.com",
-    "gcm_id": "stomatrix"
-  },
-  {
-    "name": "laddusinha",
-    "dob": "29/6/2013",
-    "tag_line": "loveeatingfood",
-    "tag_name": "google, doodle",
-    "subjects": "everythingwitheverything",
-    "address": "28.443868, 77.058338",
-    "ins_type": "college",
-    "email": "a.s.rex2006@gmail.com",
-    "gcm_id": "laddu"
-  }
+    {
+        "name": "aishwarya unnikrishnan",
+        "dob": "3/4/1995",
+        "tag_line": "love studying physics",
+        "ins_name": "DTU",
+        "subjects": "electrical, english",
+        "address": "28.748802, 77.118539",
+        "ins_type": "college",
+        "email": "abhinav.b.sinha@gmail.com",
+        "gcm_id": "sheikeb@b"
+    },
+    {
+        "name": "krutika rastogi",
+        "dob": "31/3/1994",
+        "tag_line": "coding aokp android",
+        "ins_name": "DTU",
+        "subjects": "adfaf random shit, ",
+        "address": "28.739621, 77.108239",
+        "ins_type": "school",
+        "email": "championswimmer@gmail.com",
+        "gcm_id": "championswimmer"
+    },
+     {
+        "name": "aishwarya unnikrishnan",
+        "dob": "3/4/1995",
+        "tag_line": "guitars",
+        "ins_name": "DTU",
+        "subjects": "electrical, , bio chem, english",
+        "address": "28.740186, 77.122830",
+        "ins_type": "college",
+        "email": "abhinav.b.d.fsinha@gmail.com",
+        "gcm_id": "sheikeb@@@@b"
+    },
+    {
+        "name": "krutika rastogi",
+        "dob": "31/3/1994",
+        "tag_line": "lovecodingandalgorithms",
+        "ins_name": "DTU",
+        "subjects": "everything",
+        "address": "28.724757, 77.112488",
+        "ins_type": "school",
+        "email": "championswimmeristhebomb@gmail.com",
+        "gcm_id": "the bomb"
+    },
+    {
+        "name": "sopandev tewari",
+        "dob": "15/8/1994",
+        "tag_line": "u rock",
+        "ins_name": "IITD",
+        "subjects": "cycling, thermal, polychemical sciences, ",
+        "address": "28.524908, 77.145903",
+        "ins_type": "college",
+        "email": "omerddk@gmail.com",
+        "gcm_id": "odedrk"
+    },
+    {
+        "name": "ananya chandra",
+        "dob": "17/4/1994",
+        "tag_line": "love u ",
+        "ins_name": "IITD",
+        "subjects": "mechanics, thermal, ",
+        "address": "28.439075,     77.040228",
+        "ins_type": "school",
+        "email": "anaya@gmail.com",
+        "gcm_id": "namak"
+    },
+     {
+        "name": "sopandev tewari",
+        "dob": "15/8/1994",
+        "tag_line": "love php coding",
+        "ins_name": "IITD",
+        "subjects": "thermal, mechanical, cycling",
+        "address": "28.501980, 77.181265",
+        "ins_type": "college",
+        "email": "omerjerk@gmail.com",
+        "gcm_id": "omerjerk"
+    },
+    {
+        "name": "ananya chandra",
+        "dob": "17/4/1994",
+        "tag_line": "love python coding",
+        "ins_name": "IITD",
+        "subjects": "physics, mechanics, ",
+        "address": "28.402972, 77.272589",
+        "ins_type": "school",
+        "email": "stomatrix@gmail.com",
+        "gcm_id": "stomatrix"
+    },
+    {
+        "name": "gunshi",
+        "dob": "29/6/2013",
+        "tag_line": "you know it",
+        "ins_name": "NSIT",
+        "subjects": "computers and software",
+        "address": "28.391381, 77.048949",
+        "ins_type": "college",
+        "email": "gunshi@gmail.com",
+        "gcm_id": "dodo"
+ 
+       },
+       {
+        "name": "vimharsh",
+        "dob": "29/6/2013",
+        "tag_line": "wobbly",
+        "ins_name": "NSIT",
+        "subjects": "evrything",
+        "address": "28.417278, 77.090685",
+        "ins_type": "college",
+        "email": "vimharsh.sinha@gmail.com",
+        "gcm_id": "ladddddu"
+    },
+     {
+        "name": "gunshi",
+        "dob": "29/6/2013",
+        "tag_line": "love eating food",
+        "ins_name": "NSIT",
+        "subjects": "everythingwitheverything",
+        "address": "28.438862, 77.036487",
+        "ins_type": "college",
+        "email": "a.s.rex2006564@gmail.com",
+        "gcm_id": "lasse"
+ 
+       },
+       {
+        "name": "vimharsh",
+        "dob": "29/6/2013",
+        "tag_line": "loveeatingfood and wanna",
+        "ins_name": "NSIT",
+        "subjects": "everythingwitheverything",
+        "address": "28.444533, 77.046550",
+        "ins_type": "college",
+        "email": "a.s.rexss2006@gmail.com",
+        "gcm_id": "ssladdu"
+    }
+
 ]

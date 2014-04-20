@@ -3,6 +3,7 @@ package in.stud.main.fragments;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
+
+import java.util.Random;
 
 import in.stud.R;
 import in.stud.main.ImageLoader;
@@ -56,6 +59,8 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
      */
     private BaseAdapter mAdapter;
     private PeopleContent mContent;
+    public Drawable[] randrawable;
+
 
 
     // TODO: Rename and change types of parameters
@@ -96,6 +101,13 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
         }
 
         mAdapter = new PeopleAdapter(mContent);
+
+        randrawable = new Drawable[]{
+                getResources().getDrawable(R.drawable.people_ph1),
+                getResources().getDrawable(R.drawable.people_ph2),
+                getResources().getDrawable(R.drawable.people_ph3),
+                getResources().getDrawable(R.drawable.people_ph4)
+        };
 
 
     }
@@ -200,6 +212,11 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
             } else {
                 rowView = convertView;
             }
+
+            ((ImageView) rowView.findViewById(R.id.people_list_photo)).setImageDrawable(randrawable[new Random().nextInt(4)]);
+            ((TextView) rowView.findViewById(R.id.people_list_name)).setText(pContent.mItems.get(position).name);
+            ((TextView) rowView.findViewById(R.id.people_list_inst_name)).setText(pContent.mItems.get(position).instName);
+
 
             return rowView;
         }

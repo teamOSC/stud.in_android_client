@@ -90,7 +90,7 @@ public class PeopleContent {
                 dob = jo.getString("name"); //Log.d("HULALA", dob);
                 email = jo.getString("email"); //Log.d("HULALA", email);
                 instType = jo.getString("ins_type");
-                instName = jo.getString("tag_name");
+                instName = jo.getString("ins_name");
                 subjects = jo.getString("subjects");
                 address = jo.getString("address");
                 gcmId = jo.getString("gcm_id");
