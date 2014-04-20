@@ -1,7 +1,11 @@
 package in.stud.main.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +45,7 @@ import in.stud.R;
 import in.stud.main.ImageLoader;
 import in.stud.main.ImageUploaderUtility;
 import in.stud.main.NotesUploadActivity;
+import in.stud.main.Utils;
 import in.stud.main.content.NotesContent;
 
 /**
@@ -65,6 +71,8 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
     private static int loader = R.drawable.placeholder_anim;
 
     private OnFragmentInteractionListener mListener;
+
+    public JSONArray mGlobalArray = null;
 
     /**
      * The fragment's ListView/GridView.
@@ -151,6 +159,8 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        FUllImageDialog mFullDialog = new FUllImageDialog(position);
+        mFullDialog.show(getFragmentManager(), "FULL_DIALOG");
     }
 
     @Override
@@ -168,6 +178,16 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
             Intent mIntent = new Intent(getActivity(), NotesUploadActivity.class);
             getActivity().startActivity(mIntent);
             return true;
+        }
+
+        if (item.getItemId() == R.id.action_refresh) {
+            new Utils.DownloadImageThumbnails(getActivity()) {
+                @Override
+                protected void onPostExecute (Void v) {
+                    super.onPostExecute(v);
+                    mListener.onFragmentInteraction("REFRESH_VIEW");
+                }
+            }.execute();
         }
 
         return super.onOptionsItemSelected(item);
@@ -188,10 +208,51 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
         public void onFragmentInteraction(String id);
     }
 
+    public class FUllImageDialog extends DialogFragment {
+
+        int position;
+
+        public FUllImageDialog(int position) {
+            this.position = position;
+        }
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            final View fuckThis = inflater.inflate(R.layout.dialog_full_note, null);
+            builder.setView(fuckThis)
+                    // Add action buttons
+                    .setPositiveButton("share", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    })
+                    .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+            ImageView fullImageView = (ImageView) fuckThis.findViewById(R.id.full_note_view);
+            ImageLoader imgLoader = new ImageLoader(getActivity());
+            try {
+                imgLoader.DisplayImage(mGlobalArray.getJSONObject(position).getString("url"), loader, fullImageView);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return builder.create();
+        }
+    }
+
     public class NotesAdapter extends BaseAdapter {
 
         private NotesContent content;
-        JSONArray mArray;
+        public JSONArray mArray;
 
         NotesAdapter( NotesContent nc) {
             content = nc;
@@ -208,6 +269,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
                     text.append('\n');
                 }
                 mArray = new JSONArray(text.toString());
+                mGlobalArray = mArray;
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -227,7 +289,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
@@ -247,7 +309,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
             ImageLoader imgLoader = new ImageLoader(getActivity());
 
             try {
-                imgLoader.DisplayImage(mArray.getJSONObject(0).getString("thumb_img"), loader, thumbnailView);
+                imgLoader.DisplayImage(mArray.getJSONObject(position).getString("thumb_img"), loader, thumbnailView);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
