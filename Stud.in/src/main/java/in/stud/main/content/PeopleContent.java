@@ -58,10 +58,8 @@ public class PeopleContent {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            Log.d("OMGWTF", is.toString());
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            Log.d("OMGWTF", "caught exception");
             ex.printStackTrace();
             return null;
         }
@@ -87,10 +85,10 @@ public class PeopleContent {
 
         public PeopleItem(JSONObject jo) {
             try {
-                name = jo.getString("name");
-                tagLine = jo.getString("tag_line");
-                dob = jo.getString("name");
-                email = jo.getString("email");
+                name = jo.getString("name"); //Log.d("HULALA", name);
+                tagLine = jo.getString("tag_line"); //Log.d("HULALA", tagLine);
+                dob = jo.getString("name"); //Log.d("HULALA", dob);
+                email = jo.getString("email"); //Log.d("HULALA", email);
                 instType = jo.getString("ins_type");
                 instName = jo.getString("tag_name");
                 subjects = jo.getString("subjects");

@@ -1,5 +1,6 @@
 package in.stud.main.fragments;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -67,6 +68,11 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
      * fragment (e.g. upon screen orientation changes).
      */
     public PeopleListFragment() {
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        return super.onCreateAnimator(transit, enter, nextAnim);
     }
 
     @Override
