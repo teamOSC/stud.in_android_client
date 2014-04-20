@@ -20,7 +20,7 @@ import in.stud.main.content.PeopleContent;
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
  * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
+ * Activities containing this fragment MUST implement the Callbacks
  * interface.
  */
 public class PeopleListFragment extends Fragment implements AbsListView.OnItemClickListener {
@@ -73,9 +73,7 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<PeopleContent.DummyItem>(getActivity(),
-                R.layout.list_item_people, R.id.people_list_item_header, PeopleContent.ITEMS);
+
     }
 
     @Override
@@ -113,11 +111,7 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(PeopleContent.ITEMS.get(position).id);
-        }
+
     }
 
     /**

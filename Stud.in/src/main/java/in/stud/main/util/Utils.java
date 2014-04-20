@@ -1,8 +1,10 @@
-package in.stud.main;
+package in.stud.main.util;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * Created by omerjerk on 19/4/14.
@@ -29,6 +31,24 @@ public class Utils {
             account = null;
         }
         return account;
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = cm.getActiveNetworkInfo();
+            if (ni == null) {
+                // There are no active networks.
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 }

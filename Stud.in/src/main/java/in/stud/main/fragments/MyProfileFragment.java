@@ -3,14 +3,10 @@ package in.stud.main.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +17,7 @@ import android.widget.TextView;
 import java.io.File;
 
 import in.stud.R;
-import in.stud.main.Utils;
+import in.stud.main.util.Utils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

@@ -158,7 +158,7 @@ public class PeopleFragment extends Fragment
 
         @Override
         public Fragment getItem(int position) {
-            return PeopleListFragment.newInstance("A", "a");
+            return PeopleListFragment.newInstance(PeopleContent.PEOPLE_SEARCH_TYPE[position], "a");
         }
 
     }

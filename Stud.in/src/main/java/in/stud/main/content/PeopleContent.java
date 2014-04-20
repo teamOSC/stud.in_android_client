@@ -1,5 +1,13 @@
 package in.stud.main.content;
 
+import android.content.Context;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,46 +28,76 @@ public class PeopleContent {
               "IN MY CIRCLES"
             };
 
-
+    private Context mContext;
 
 
     /**
      * An array of sample (dummy) items.
      */
-    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static List<PeopleItem> mItems = new ArrayList<PeopleItem>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public PeopleContent( Context c ) throws JSONException {
 
-    static {
-        // Add 3 sample items.
-        addItem(new DummyItem("1", "Guy 1"));
-        addItem(new DummyItem("2", "Guy 2"));
-        addItem(new DummyItem("3", "Guy 3"));
+        mContext = c;
+
+        String jsonString = loadJSONFromAsset(mContext);
+        JSONArray jarr = new JSONArray(jsonString);
+        int len = jarr.length();
+        for (int i = 0; i < len; i ++) {
+            mItems.add(new PeopleItem(jarr.getJSONObject(i)));
+        }
+
     }
 
-    private static void addItem(DummyItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+    public String loadJSONFromAsset(Context context) {
+        String json = null;
+        try {
+            InputStream is = context.getAssets().open("example_people.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
+
+
 
     /**
      * A dummy item representing a piece of content.
      */
-    public static class DummyItem {
-        public String id;
-        public String content;
+    public static class PeopleItem {
+        public String
+                name = "",
+                tagLine = "",
+                dob = "",
+                email = "",
+                instType = "",
+                instName = "",
+                subjects = "",
+                address = "",
+                gcmId = "";
 
-        public DummyItem(String id, String content) {
-            this.id = id;
-            this.content = content;
+        public PeopleItem(JSONObject jo) {
+            try {
+                name = jo.getString("name");
+                tagLine = jo.getString("tag_line");
+                dob = jo.getString("name");
+                email = jo.getString("email");
+                instType = jo.getString("ins_type");
+                instName = jo.getString("tag_name");
+                subjects = jo.getString("subjects");
+                address = jo.getString("address");
+                gcmId = jo.getString("gcm_id");
+            } catch ( JSONException e ) {
+                //omgwtf nothing happened !!!
+            }
         }
 
-        @Override
-        public String toString() {
-            return content;
-        }
+
     }
 }
