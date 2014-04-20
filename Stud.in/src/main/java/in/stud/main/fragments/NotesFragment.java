@@ -217,7 +217,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
 
         @Override
         public int getCount() {
-            return content.getCount();
+            return mArray.length();
         }
 
         @Override
@@ -247,7 +247,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
             ImageLoader imgLoader = new ImageLoader(getActivity());
 
             try {
-                imgLoader.DisplayImage(mArray.getJSONObject(0).getString("thumb_name"), loader, thumbnailView);
+                imgLoader.DisplayImage(mArray.getJSONObject(0).getString("thumb_img"), loader, thumbnailView);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

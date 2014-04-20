@@ -158,9 +158,10 @@ public class SetupProfileActivity extends Activity implements
     public void onConnected(Bundle bundle) {
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            String mCoverUrl = currentPerson.getCover().getCoverPhoto().getUrl();
             Person.Image personPhoto = currentPerson.getImage();
             if (personPhoto.hasUrl()) {
-                new DownloadProfilePhotoTask().execute(new String[] {personPhoto.getUrl()});
+                new DownloadProfilePhotoTask().execute(new String[] {personPhoto.getUrl(), mCoverUrl});
             }
         }
 
@@ -176,40 +177,51 @@ public class SetupProfileActivity extends Activity implements
 
     }
 
-    public class DownloadProfilePhotoTask extends AsyncTask<String, Void , Bitmap> {
+    public class DownloadProfilePhotoTask extends AsyncTask<String, Void , Bitmap[]> {
 
         @Override
-        protected Bitmap doInBackground(String... strings) {
-            Bitmap downloadedBitmap = null;
+        protected Bitmap[] doInBackground(String... strings) {
+            Bitmap downloadedProfileBitmap = null;
+            Bitmap downloadedCoverBitmap = null;
             try {
                 String[] urlParts = strings[0].split("=");
-                URL url = new URL(urlParts[0] + "=500");
-                HttpURLConnection connection = (HttpURLConnection) url
+                URL profileUrl = new URL(urlParts[0] + "=500");
+                URL coverUrl =  new URL(strings[1]);
+                HttpURLConnection connection = (HttpURLConnection) profileUrl
                         .openConnection();
                 connection.setDoInput(true);
                 connection.connect();
                 InputStream input = connection.getInputStream();
-                downloadedBitmap = BitmapFactory.decodeStream(input);
+                downloadedProfileBitmap = BitmapFactory.decodeStream(input);
+
+                HttpURLConnection connection2 = (HttpURLConnection) coverUrl.openConnection();
+                connection2.setDoInput(true);
+                connection2.connect();
+                InputStream input2 = connection2.getInputStream();
+                downloadedCoverBitmap = BitmapFactory.decodeStream(input2);
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            return downloadedBitmap;
+            return new Bitmap[] {downloadedProfileBitmap, downloadedCoverBitmap};
         }
 
         @Override
-        protected void onPostExecute (Bitmap mBitmap) {
-            File destBitmapPath = new File(getFilesDir(), "myProfile.png");
+        protected void onPostExecute (Bitmap[] mBitmaps) {
+            File destProfilePath = new File(getFilesDir(), "myProfile.png");
+            File destCoverPath = new File(getFilesDir(), "myCover.png");
             try {
-                mBitmap.compress(Bitmap.CompressFormat.PNG, 90, new FileOutputStream(destBitmapPath));
+                mBitmaps[0].compress(Bitmap.CompressFormat.PNG, 90, new FileOutputStream(destProfilePath));
+                mBitmaps[1].compress(Bitmap.CompressFormat.PNG, 90, new FileOutputStream(destCoverPath));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 //We don't give a single fuck
             }
             profileProgressBar.setVisibility(View.GONE);
-            profilePhoto.setImageBitmap(mBitmap);
+            profilePhoto.setImageBitmap(mBitmaps[0]);
             profilePhoto.setVisibility(View.VISIBLE);
         }
     }
