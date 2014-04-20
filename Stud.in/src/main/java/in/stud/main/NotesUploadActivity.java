@@ -4,21 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.ClipData;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import in.stud.R;
 
@@ -30,6 +23,17 @@ public class NotesUploadActivity extends Activity {
 
     private ArrayList<String> imagesPath = new ArrayList<String>();
 
+    UploadingMessageDialog mDialog;
+
+    boolean[] taskStatusList;
+
+    /*
+     * UI Elements
+     */
+    private EditText tagsEditText;
+
+    String[] all_path;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,37 +43,39 @@ public class NotesUploadActivity extends Activity {
             Intent i = new Intent(Action.ACTION_MULTIPLE_PICK);
             startActivityForResult(i, 200);
         }
+
+        tagsEditText = (EditText) findViewById(R.id.tags_editText);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String[] all_path = data.getStringArrayExtra("all_path");
+        all_path = data.getStringArrayExtra("all_path");
 
-        for (String path : all_path) {
-            Log.d(TAG, "File Path = " + path);
-        }
         photoSelected = true;
-
-        UploadingMessageDialog mDialog = new UploadingMessageDialog();
-        mDialog.show(getFragmentManager(), "UPLOADING_DIALOG");
-        mDialog.setCancelable(false);
-        new UploadFilesTask(mDialog).execute();
     }
 
-    private class UploadFilesTask extends AsyncTask<Void, Void, Void> {
+    public class UploadFileTask extends AsyncTask<String, Void, Void> {
 
-        private UploadingMessageDialog mDialog;
+        int pos;
 
-        public UploadFilesTask(UploadingMessageDialog mDialog) {
-            this.mDialog = mDialog;
+        public UploadFileTask (int pos) {
+            this.pos = pos;
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            
+        protected Void doInBackground(String... path) {
+            new ImageUploaderUtility().uploadSingleImage(path[0], tagsEditText.getText().toString());
             return null;
+        }
+
+        @Override
+        protected void onPostExecute (Void v) {
+            taskStatusList[pos] = false;
+            if (!Arrays.asList(taskStatusList).contains(true)) {
+                mDialog.dismiss();
+            }
         }
     }
 
@@ -81,6 +87,25 @@ public class NotesUploadActivity extends Activity {
             builder.setMessage("Uploading ...");
             // Create the AlertDialog object and return it
             return builder.create();
+        }
+    }
+
+    public void upload (View v) {
+        if (!tagsEditText.getText().toString().equals("")) {
+            tagsEditText.setError(null);
+            mDialog = new UploadingMessageDialog();
+            mDialog.show(getFragmentManager(), "UPLOADING_DIALOG");
+            mDialog.setCancelable(false);
+            UploadFileTask[] mUploadTask = new UploadFileTask[all_path.length];
+            taskStatusList = new boolean[all_path.length];
+            for (int i = 0; i < all_path.length; ++i) {
+                String path = all_path[i];
+                mUploadTask[i] = new UploadFileTask(i);
+                mUploadTask[i].execute(new String[]{path});
+                taskStatusList[i] = true;
+            }
+        } else {
+            tagsEditText.setError("Please enter tags");
         }
     }
 }
