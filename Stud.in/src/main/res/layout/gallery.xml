@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/no_media" />
+            android:src="@drawable/placeholder_anim" />
     </FrameLayout>
 
     <LinearLayout

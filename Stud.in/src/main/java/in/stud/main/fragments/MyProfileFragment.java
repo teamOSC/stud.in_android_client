@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.io.File;
 
 import in.stud.R;
-import in.stud.main.util.Utils;
+import in.stud.main.Utils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

@@ -20,7 +20,7 @@
                 android:layout_height="@dimen/photo_height"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/no_media" />
+                android:src="@drawable/placeholder_anim" />
         </FrameLayout>
 
         <ImageView

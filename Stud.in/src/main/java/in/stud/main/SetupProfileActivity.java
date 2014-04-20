@@ -56,7 +56,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import in.stud.R;
-import in.stud.main.util.Utils;
 
 public class SetupProfileActivity extends Activity implements
         Button.OnClickListener,
