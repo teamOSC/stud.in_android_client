@@ -268,6 +268,17 @@ public class SetupProfileActivity extends Activity implements
             if (MapDialog.homePosition == null)
                 Toast.makeText(getApplicationContext(), "please select address", Toast.LENGTH_SHORT).show();
         } else {
+            SharedPreferences profilePrefs = getSharedPreferences("PREFS_PROFILE", MODE_WORLD_WRITEABLE);
+            SharedPreferences.Editor ed = profilePrefs.edit();
+            ed.putString("name", name);
+            ed.putString("tagLine", tagLine);
+            ed.putString("dob", dob);
+            ed.putString("institutionType", institutionType);
+            ed.putString("institutionName", institutionName);
+            ed.putString("subjects", subjects);
+            ed.putString("email", email);
+            ed.commit();
+
             try {
                 name =  URLEncoder.encode(name, "UTF-8");
                 tagLine = URLEncoder.encode(tagLine, "UTF-8");
