@@ -276,7 +276,7 @@ public class SetupProfileActivity extends Activity implements
             ed.putString("institutionType", institutionType);
             ed.putString("institutionName", institutionName);
             ed.putString("subjects", subjects);
-            ed.putString("email", email);
+            ed.putString("email", Utils.getEmail(getBaseContext()));
             ed.commit();
 
             try {

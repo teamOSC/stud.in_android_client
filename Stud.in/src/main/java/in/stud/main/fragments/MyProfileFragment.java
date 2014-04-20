@@ -1,12 +1,16 @@
 package in.stud.main.fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import in.stud.R;
 
@@ -66,6 +70,18 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("PREFS_PROFILE", Context.MODE_PRIVATE);
+        ScrollView sv = (ScrollView) rootView.findViewById(R.id.my_profile_scroll_container);
+        ((TextView) rootView.findViewById(R.id.my_profile_full_name)).setText(prefs.getString("name", "Arnav Gupta"));
+        ((TextView) rootView.findViewById(R.id.my_profile_tagline)).setText(prefs.getString("tagLine", "hack all night !!!"));
+
+
+        ((TextView) sv.findViewById(R.id.my_profile_dob_value)).setText(prefs.getString("dob", "31-03-1993"));
+        ((TextView) sv.findViewById(R.id.my_profile_email_value)).setText(prefs.getString("email", "championswimmer@gmail.com"));
+        ((TextView) sv.findViewById(R.id.my_profile_institution_type_value)).setText(prefs.getString("institutionType", "College"));
+        ((TextView) sv.findViewById(R.id.my_profile_institution_name_value)).setText(prefs.getString("institutionName", "DTU"));
+        ((TextView) sv.findViewById(R.id.my_profile_subjects_value)).setText(prefs.getString("subjects", "Physics,Maths"));
+
         return rootView;
     }
 
