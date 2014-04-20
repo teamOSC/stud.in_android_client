@@ -2,6 +2,7 @@ package in.stud.main.fragments;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import in.stud.R;
+import in.stud.main.ImageLoader;
 import in.stud.main.content.PeopleContent;
 
 /**
@@ -52,6 +55,8 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
      * Views.
      */
     private BaseAdapter mAdapter;
+    private PeopleContent mContent;
+
 
     // TODO: Rename and change types of parameters
     public static PeopleListFragment newInstance(String param1, String param2) {
@@ -85,10 +90,12 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
         }
 
         try {
-            PeopleContent mContent = new PeopleContent(getActivity().getBaseContext());
+            mContent = new PeopleContent(getActivity().getBaseContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        mAdapter = new PeopleAdapter(mContent);
 
 
     }
@@ -100,7 +107,8 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.people_list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
+
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -184,7 +192,16 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            View rowView;
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(R.layout.list_item_people, null);
+            } else {
+                rowView = convertView;
+            }
+
+            return rowView;
         }
     }
 
