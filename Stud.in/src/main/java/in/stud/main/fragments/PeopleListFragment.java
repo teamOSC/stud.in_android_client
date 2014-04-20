@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONException;
+
 import in.stud.R;
 import in.stud.main.content.PeopleContent;
 
@@ -45,7 +50,7 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private BaseAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static PeopleListFragment newInstance(String param1, String param2) {
@@ -71,6 +76,12 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+        try {
+            PeopleContent mContent = new PeopleContent(getActivity().getBaseContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
 
@@ -140,6 +151,35 @@ public class PeopleListFragment extends Fragment implements AbsListView.OnItemCl
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+    }
+
+    public class PeopleAdapter extends BaseAdapter {
+
+        private PeopleContent pContent;
+
+        public PeopleAdapter (PeopleContent pc)  {
+            pContent = pc;
+        }
+
+        @Override
+        public int getCount() {
+            return pContent.mItems.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return pContent.mItems.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
     }
 
 }

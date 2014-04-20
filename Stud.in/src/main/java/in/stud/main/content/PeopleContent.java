@@ -1,6 +1,7 @@
 package in.stud.main.content;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,7 @@ public class PeopleContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<PeopleItem> mItems = new ArrayList<PeopleItem>();
+    public List<PeopleItem> mItems = new ArrayList<PeopleItem>();
 
     public PeopleContent( Context c ) throws JSONException {
 
@@ -57,8 +58,10 @@ public class PeopleContent {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
+            Log.d("OMGWTF", is.toString());
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
+            Log.d("OMGWTF", "caught exception");
             ex.printStackTrace();
             return null;
         }

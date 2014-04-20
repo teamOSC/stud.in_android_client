@@ -1,0 +1,57 @@
+[
+  {
+    "name": "abhinav sinha",
+    "dob": "3/4/1995",
+    "tag_line": "love studying physics",
+    "tag_name": "physics, mathematics",
+    "subjects": "electrical, english",
+    "address": "28.444585, 77.042827",
+    "ins_type": "college",
+    "email": "abhinav.b.sinha@gmail.com",
+    "gcm_id": "sheikeb@b"
+  },
+  {
+    "name": "arnav gupta",
+    "dob": "31/3/1994",
+    "tag_line": "lovecodingandalgorithms",
+    "tag_name": "chemistry, economics",
+    "subjects": "everything",
+    "address": "28.444292, 77.040649",
+    "ins_type": "school",
+    "email": "championswimmer@gmail.com",
+    "gcm_id": "championswimmer"
+  },
+  {
+    "name": "umairkhan",
+    "dob": "15/8/1994",
+    "tag_line": "lovephpcoding",
+    "tag_name": "machines, powersystems",
+    "subjects": "everythingandmore",
+    "address": "28.443273, 77.038954",
+    "ins_type": "college",
+    "email": "omerjerk@gmail.com",
+    "gcm_id": "omerjerk"
+  },
+  {
+    "name": "sauravtomar",
+    "dob": "17/4/1994",
+    "tag_line": "lovepythoncoding",
+    "tag_name": "lic,     edc",
+    "subjects": "everythingwithmuchmore",
+    "address": "28.439075,     77.040228",
+    "ins_type": "school",
+    "email": "stomatrix@gmail.com",
+    "gcm_id": "stomatrix"
+  },
+  {
+    "name": "laddusinha",
+    "dob": "29/6/2013",
+    "tag_line": "loveeatingfood",
+    "tag_name": "google, doodle",
+    "subjects": "everythingwitheverything",
+    "address": "28.443868, 77.058338",
+    "ins_type": "college",
+    "email": "a.s.rex2006@gmail.com",
+    "gcm_id": "laddu"
+  }
+]
