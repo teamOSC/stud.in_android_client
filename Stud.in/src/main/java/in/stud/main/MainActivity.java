@@ -158,7 +158,12 @@ public class MainActivity extends Activity
 
     @Override
     public void onFragmentInteraction(String id) {
-
+        if (id.equals("REFRESH_VIEW")) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, NotesFragment.newInstance("A", "a"))
+                    .commit();
+        }
     }
 
     @Override
