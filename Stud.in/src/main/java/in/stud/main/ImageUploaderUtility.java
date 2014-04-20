@@ -12,7 +12,6 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 
-import android.os.Environment;
 import android.util.Log;
 
 public class ImageUploaderUtility {
