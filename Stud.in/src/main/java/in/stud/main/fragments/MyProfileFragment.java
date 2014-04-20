@@ -3,16 +3,25 @@ package in.stud.main.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.io.File;
+
 import in.stud.R;
+import in.stud.main.Utils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -75,9 +84,13 @@ public class MyProfileFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.my_profile_full_name)).setText(prefs.getString("name", "Arnav Gupta"));
         ((TextView) rootView.findViewById(R.id.my_profile_tagline)).setText(prefs.getString("tagLine", "hack all night !!!"));
 
+        File profilePhotoFile = new File (getActivity().getFilesDir(), "myProfile.png");
+        Drawable profilePhoto = Drawable.createFromPath(profilePhotoFile.getPath());
+        ((ImageView) rootView.findViewById(R.id.my_profile_profile_photo)).setImageDrawable(profilePhoto);
+
 
         ((TextView) sv.findViewById(R.id.my_profile_dob_value)).setText(prefs.getString("dob", "31-03-1993"));
-        ((TextView) sv.findViewById(R.id.my_profile_email_value)).setText(prefs.getString("email", "championswimmer@gmail.com"));
+        ((TextView) sv.findViewById(R.id.my_profile_email_value)).setText(Utils.getEmail(getActivity()));
         ((TextView) sv.findViewById(R.id.my_profile_institution_type_value)).setText(prefs.getString("institutionType", "College"));
         ((TextView) sv.findViewById(R.id.my_profile_institution_name_value)).setText(prefs.getString("institutionName", "DTU"));
         ((TextView) sv.findViewById(R.id.my_profile_subjects_value)).setText(prefs.getString("subjects", "Physics,Maths"));
