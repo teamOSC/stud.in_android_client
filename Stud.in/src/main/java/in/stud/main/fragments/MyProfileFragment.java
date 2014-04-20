@@ -81,8 +81,11 @@ public class MyProfileFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.my_profile_tagline)).setText(prefs.getString("tagLine", "hack all night !!!"));
 
         File profilePhotoFile = new File (getActivity().getFilesDir(), "myProfile.png");
+        File coverPhotoFile = new File (getActivity().getFilesDir(), "myCover.png");
         Drawable profilePhoto = Drawable.createFromPath(profilePhotoFile.getPath());
+        Drawable coverPhoto = Drawable.createFromPath(coverPhotoFile.getPath());
         ((ImageView) rootView.findViewById(R.id.my_profile_profile_photo)).setImageDrawable(profilePhoto);
+        ((ImageView) rootView.findViewById(R.id.my_profile_cover_photo)).setImageDrawable(coverPhoto);
 
 
         ((TextView) sv.findViewById(R.id.my_profile_dob_value)).setText(prefs.getString("dob", "31-03-1993"));

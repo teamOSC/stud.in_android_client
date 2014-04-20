@@ -83,7 +83,7 @@ public class MainActivity extends Activity
         }
 
 
-        //new Utils.DownloadImageThumbnails(getApplicationContext()).execute();
+        new Utils.DownloadImageThumbnails(getApplicationContext()).execute();
     }
 
     @Override
