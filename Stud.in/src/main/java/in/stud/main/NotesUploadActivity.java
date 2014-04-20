@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +76,8 @@ public class NotesUploadActivity extends Activity {
             taskStatusList[pos] = false;
             if (!Arrays.asList(taskStatusList).contains(true)) {
                 mDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "All photos uploaded!", Toast.LENGTH_SHORT).show();
+                NotesUploadActivity.this.finish();
             }
         }
     }

@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -280,7 +282,8 @@ public class SetupProfileActivity extends Activity implements
 
             final String url = "http://tosc.in:5002/add?name="+name+"&tag_line="+tagLine+"&email="+email+
                     "&dob="+ dob + "&ins_type=" + institutionType + "&ins_name=" + institutionName
-                    + "&address=" + MapDialog.homePosition.latitude + "," + MapDialog.homePosition.longitude + "&subjects=" + subjects;
+                    + "&address=" + MapDialog.homePosition.latitude + "," + MapDialog.homePosition.longitude + "&subjects=" + subjects
+                    + "&gcm_id=" + System.currentTimeMillis();
             Log.d(TAG, "GET URL = " + url);
 
             new AsyncTask<Void, Void, Void>() {
@@ -290,13 +293,13 @@ public class SetupProfileActivity extends Activity implements
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet httpget = new HttpGet(url);
                     try {
-                        httpClient.execute(httpget);
+                        HttpResponse response = httpClient.execute(httpget);
+                        Log.d(TAG, response.getEntity().toString());
                     } catch (ClientProtocolException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     return null;
                 }
 

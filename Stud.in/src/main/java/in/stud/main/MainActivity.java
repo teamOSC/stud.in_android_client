@@ -119,12 +119,10 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onFragmentInteraction(String id) {
 
     }
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
