@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -27,6 +28,8 @@ import in.stud.R;
  */
 public class ImageLoader {
 
+    private static final String TAG = "ImageLoader";
+
     MemoryCache memoryCache=new MemoryCache();
     FileCache fileCache;
     private Map<ImageView, String> imageViews= Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
@@ -43,8 +46,11 @@ public class ImageLoader {
         stub_id = loader;
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
-        if(bitmap!=null)
+        if(bitmap!=null) {
             imageView.setImageBitmap(bitmap);
+            Log.d(TAG, "Width = " + bitmap.getWidth() + " height = " + bitmap.getHeight());
+        }
+
         else
         {
             queuePhoto(url, imageView);
@@ -96,15 +102,15 @@ public class ImageLoader {
             BitmapFactory.decodeStream(new FileInputStream(f),null,o);
 
             //Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE=70;
+            final int REQUIRED_SIZE=200;
             int width_tmp=o.outWidth, height_tmp=o.outHeight;
             int scale=1;
             while(true){
                 if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
                     break;
-                width_tmp/=2;
-                height_tmp/=2;
-                scale*=2;
+                width_tmp/=1;
+                height_tmp/=1;
+                scale*=1;
             }
 
             //decode with inSampleSize

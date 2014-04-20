@@ -5,8 +5,12 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:isScrollContainer="true"
+        android:scaleType="centerCrop"
+        android:minHeight="900px"
+        android:minWidth="900px"
         android:id="@+id/full_note_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 </LinearLayout>
