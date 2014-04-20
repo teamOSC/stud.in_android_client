@@ -224,7 +224,7 @@ public class NotesFragment extends Fragment implements AbsListView.OnItemClickLi
             title.setText(content.mItems.get(position).noteTitle);
             uploader.setText(content.mItems.get(position).uploader);
             tags.setText(content.mItems.get(position).tags.toString());
-            return null;
+            return rowView;
         }
     }
 
